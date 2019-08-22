@@ -24,11 +24,14 @@ function* run() {
   nextExists = yield nightmare.visible(loadMore);
 
   while (nextExists && currentPage < MAX_PAGE) {
-    cards.push(yield nightmare
-      .evaluate(function() {
-        return [].slice.call(document.querySelectorAll(".card")).map((c) => c.outerHTML);
-      }));
-
+    if((currentPage + 1) == MAX_PAGE)
+    { 
+      cards.push(yield nightmare
+        .evaluate(function() {
+          return [].slice.call(document.querySelectorAll(".card")).map((c) => c.outerHTML);
+        }));
+    }
+    
     yield nightmare
       .click(loadMore)
       .wait(loadMore)
