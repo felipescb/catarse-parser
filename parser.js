@@ -1,5 +1,5 @@
 const Nightmare = require('nightmare');      
-const nightmare = Nightmare({ show: false, waitTimeout: 5000 });                                                                                                                                                                
+const nightmare = Nightmare({ show: false, waitTimeout: 10000 });                                                                                                                                                                
 const vo = require('vo');     
 
 const loadMore = 'a[href="#loadMore"]';
@@ -10,7 +10,7 @@ vo(run)(function(err, result) {
 });
 
 function* run() {
-  let MAX_PAGE = 30;
+  let MAX_PAGE = 45;
   let currentPage = 0;
   let nextExists = true;
   let cards = [];
@@ -33,7 +33,7 @@ function* run() {
       .click(loadMore)
       .wait(loadMore)
 
-    console.log(currentPage++);
+    console.log(++currentPage);
     nextExists = yield nightmare.visible(loadMore);
   }
 
