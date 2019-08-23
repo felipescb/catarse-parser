@@ -1,7 +1,7 @@
 const HTMLParser = require('node-html-parser');
 const fs = require('fs');
 const path = process.cwd();
-const buffer = fs.readFileSync(path + "\\cards2.html");
+const buffer = fs.readFileSync(path + "\\finalizados.html");
 const csvjson = require('csvjson');		
 
 const data = buffer.toString();
@@ -15,7 +15,7 @@ let session = [];
 cards.forEach((el, index, array) => {
 	let cash = (el.querySelector('.card-project-stats .u-text-center-small-only .fontweight-semibold')||{}).innerHTML || "";
 	let title = (el.querySelector('.link-hidden')||{}).innerHTML || "";
-	let time = (el.querySelector('.card-project-stats .u-text-right .lineheight-tight')||el.querySelector('.card-project-stats .u-text-right .fontweight-semibold')||{}).innerHTML || "";
+	let time = (el.querySelector('.card-project-stats .u-text-right .lineheight-tightest')||el.querySelector('.card-project-stats .u-text-right')||{}).innerHTML || "";
 	let percentage = (el.querySelector('.card-project-stats .fontsize-base')||{}).innerHTML || "";
 
 	let template = {
@@ -33,7 +33,7 @@ cards.forEach((el, index, array) => {
 			headers: 'key'
 		});
 
-		fs.writeFile('./data.csv', csvData, (err) => {
+		fs.writeFile('./finalizados_data.csv', csvData, (err) => {
 			if(err) {
             	console.log(err); // Do something to handle the error or just throw it
             	throw new Error(err);

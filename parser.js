@@ -10,7 +10,7 @@ vo(run)(function(err, result) {
 });
 
 function* run() {
-  let MAX_PAGE = 45;
+  let MAX_PAGE = 274;
   let currentPage = 0;
   let nextExists = true;
   let cards = [];
@@ -23,25 +23,29 @@ function* run() {
 
   nextExists = yield nightmare.visible(loadMore);
 
-  while (nextExists && currentPage < MAX_PAGE) {
-    if((currentPage + 1) == MAX_PAGE)
-    { 
-      cards.push(yield nightmare
-        .evaluate(function() {
-          return [].slice.call(document.querySelectorAll(".card")).map((c) => c.outerHTML);
-        }));
-    }
-    
+  while (nextExists && (currentPage <= MAX_PAGE)) {
+
     yield nightmare
       .click(loadMore)
       .wait(loadMore)
 
-    console.log(++currentPage);
+    console.log(currentPage);
+
+    if((currentPage++) == MAX_PAGE)
+    { 
+      console.log("saving data");
+      cards.push(yield nightmare
+        .evaluate(function() {
+          return [].slice.call(document.querySelectorAll(".card")).map((c) => c.outerHTML);
+        }));
+      console.log('projects :', cards.length);
+    }
+
     nextExists = yield nightmare.visible(loadMore);
   }
 
   let fs = require('fs');
-  fs.writeFile ("cards2.html", cards, function(err) {
+  fs.writeFile ("cards.html", cards, function(err) {
     if (err) throw err;
     console.log('complete');
   });
