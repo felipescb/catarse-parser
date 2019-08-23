@@ -1,7 +1,7 @@
 const HTMLParser = require('node-html-parser');
 const fs = require('fs');
 const path = process.cwd();
-const buffer = fs.readFileSync(path + "\\finalizados.html");
+const buffer = fs.readFileSync(path + "\\finalizados2.html");
 const csvjson = require('csvjson');		
 
 const data = buffer.toString();
