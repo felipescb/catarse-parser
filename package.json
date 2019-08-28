@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csv-parser": "^2.3.0",
     "csvjson": "^5.1.0",
     "nightmare": "^3.0.2",
     "node-html-parser": "^1.1.16",
