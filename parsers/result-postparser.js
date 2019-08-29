@@ -1,13 +1,32 @@
 const HTMLParser = require('node-html-parser');
 const fs = require('fs');
+const csvjson = require('csvjson');
 const path = process.cwd();
-const buffer = fs.readFileSync(path + "\\finalizados.html");
-const csvjson = require('csvjson');		
+const argv = require('yargs')
+    .usage('Usage: $0 <command> [options]')
+    .command('mode', 'Define the post-parser input')
+    .example('$0 mode -m finalizados', 'Parse the HTML data from the finalized projects')
+    .alias('m', 'mode')
+    .nargs('m', 1)
+    .describe('m', 'Define the post parser works')
+    .demandOption(['m'])
+    .help('h')
+    .alias('h', 'help')
+    .epilog('copyright 2019')
+    .argv;
 
-const data = buffer.toString();
-const root = HTMLParser.parse(data);
 
-//console.log(root.querySelectorAll(".w-row"));
+let buffer, data, root;
+
+if (argv.mode == 'finalizados') {
+	buffer = fs.readFileSync(path + "\\..\\data\\tmp\\finalizados.html");
+
+} else {
+	buffer = fs.readFileSync(path + "\\..\\data\\tmp\\ativos.html");
+}
+
+data = buffer.toString();
+root = HTMLParser.parse(data);
 
 let cards = root.querySelectorAll(".card");  
 let session = [];
@@ -35,7 +54,7 @@ cards.forEach((el, index, array) => {
 			headers: 'key'
 		});
 
-		fs.writeFile('./finalizados_data.csv', csvData, (err) => {
+		fs.writeFile('../data/finalizados_data3.csv', csvData, (err) => {
 			if(err) {
             	console.log(err); // Do something to handle the error or just throw it
             	throw new Error(err);
