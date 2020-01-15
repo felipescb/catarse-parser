@@ -8,13 +8,13 @@ const vo = require('vo');
 const loadMore = 'a[href="#loadMore"]';
 const url = 'https://www.catarse.me/explore?ref=ctrse_header'
 
-const savePath = '../data/tmp/ativos.html'
+const savePath = '../data/tmp/ativos2.html'
 const partialSavePath = '../data/tmp/ativos_part.html'
 
 let progress = [];
 
 vo(run)(function(err, result) {
-    f(err) {
+    if(err) {
         let fs = require('fs');
         fs.writeFile(partialSavePath, progress, function(_err) {
             if (_err) throw err;
@@ -25,7 +25,7 @@ vo(run)(function(err, result) {
 });
 
 function* run() {
-    let MAX_PAGE = 274;
+    let MAX_PAGE = 280;
     let currentPage = 0;
     let nextExists = true;
     let cards = [];

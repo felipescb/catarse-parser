@@ -41,7 +41,7 @@ function retrieveProjectData(short_url, next)
 
 
 let progress = [];
-let stream = fs.createReadStream('./finalizados_data.csv')
+let stream = fs.createReadStream('../data/remove_used.csv')
 .pipe(csv())
 .on('data', (row) => {
     stream.pause();
@@ -55,14 +55,14 @@ let stream = fs.createReadStream('./finalizados_data.csv')
             project_data.project_url = row.project_url;
 
             progress.push(project_data);
-            console.log(progress);
+            console.log("Finishing: ", row.title);
 
             let csvData = csvjson.toCSV(progress, {
               headers: 'key'
           });
 
             stream.resume();
-            fs.writeFile('./project_data.csv', csvData, (err) => {
+            fs.writeFile('../data/project_data_2.csv', csvData, (err) => {
               if(err) {
                         console.log(err); // Do something to handle the error or just throw it
                         //throw new Error(err);
